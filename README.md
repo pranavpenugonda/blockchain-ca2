@@ -54,3 +54,17 @@ Add events for both deposit and withdraw functions so users and developers can t
 event Deposit(address indexed account, uint256 amount);
 event Withdrawal(address indexed account, uint256 amount);
 ```
+
+### Issue 4: Contract Cannot Accept Direct Ether Transfers
+**Core reason:** 
+Currently, the contract doesn’t have a way to accept Ether sent directly to it (i.e., via send or transfer). This would cause the contract to reject Ether sent without calling the deposit() function.
+
+**Fix:** 
+Add a receive() function to handle Ether transfers that do not invoke a function.
+
+```solidity
+// Receive Ether sent directly to the contract without calling deposit()
+receive() external payable {
+    balances[msg.sender] += msg.value;
+}
+```
