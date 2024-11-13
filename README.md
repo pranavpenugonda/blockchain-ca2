@@ -41,4 +41,16 @@ function deposit() public payable {
 }
 ```
 
+### Issue 3: Lack of Events for Tracking Transactions
+**Core reason:** 
+Without events, it's hard to track critical actions such as deposits and withdrawals. Events provide a way to log these operations for off-chain tracking and debugging.
 
+**Fix:** 
+Add events for both deposit and withdraw functions so users and developers can track the contract's activities.
+
+
+```solidity
+// Events to log deposits and withdrawals
+event Deposit(address indexed account, uint256 amount);
+event Withdrawal(address indexed account, uint256 amount);
+```
