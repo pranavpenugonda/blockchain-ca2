@@ -68,3 +68,21 @@ receive() external payable {
     balances[msg.sender] += msg.value;
 }
 ```
+
+### Issue 4: Potential Denial of Service Due to Gas Limit
+**Core reason:** 
+When sending Ether using transfer, Solidity automatically forwards 2300 gas to the recipient's fallback function. However, certain contracts may require more gas, and if the recipient’s fallback function consumes more than 2300 gas, the transfer will fail, even if the contract has enough balance to send.
+
+**Fix:** 
+Use call instead of transfer for Ether transfers. call allows you to forward more gas and is generally considered more flexible
+
+Replace:
+```solidity
+payable(msg.sender).transfer(amount);
+```
+
+With:
+```solidity
+(bool success, ) = msg.sender.call{value: amount}("");
+require(success, "Transfer failed");
+```
