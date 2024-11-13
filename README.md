@@ -1,7 +1,5 @@
 # DWG Smart Contract
 
-This is a simple Ethereum smart contract that allows users to deposit and withdraw Ether with basic tracking features and reentrancy protection.
-
 ## Issues and Fixes
 
 ### Issue 1: **Reentrancy Vulnerability**
@@ -25,3 +23,22 @@ function withdraw(uint256 amount) public {
 
     emit Withdrawal(msg.sender, amount);
 }
+```
+
+### Issue 2: Missing Balance Check on Deposit
+**Core reason:**  
+The deposit function does not check if the deposit amount is greater than zero. Users might accidentally send zero Ether, wasting gas without any meaningful transaction.
+
+**Fix:**  
+Add a require statement to ensure the deposit amount is greater than zero.
+
+```solidity
+// Deposit function to receive Ether and update balances
+function deposit() public payable {
+    require(msg.value > 0, "Deposit amount must be greater than zero");
+    balances[msg.sender] += msg.value;
+    emit Deposit(msg.sender, msg.value);
+}
+```
+
+
