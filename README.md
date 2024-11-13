@@ -7,7 +7,7 @@ The withdraw function first transfers funds to the user and then updates the sta
 ### Fix:
 Update the balance before transferring funds. Additionally, use the call method to avoid gas limit issues during transfer, which is considered more secure than using transfer in modern contracts.
 
-// Withdraw function with reentrancy protection, amount checks, and transfer mechanism
+// Withdraw function with reentrancy protection, amount checks, and transfer mechanism <br>
 
 function withdraw(uint256 amount) public {
     require(balances[msg.sender] >= amount, "Insufficient balance");
