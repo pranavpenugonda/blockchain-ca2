@@ -12,12 +12,9 @@ Update the balance before transferring funds. Additionally, use the call method 
 function withdraw(uint256 amount) public {
     require(balances[msg.sender] >= amount, "Insufficient balance");
     require(amount > 0, "Withdrawal amount must be greater than zero");
-
     balances[msg.sender] -= amount;
-
     // Using call to avoid gas limit issues
     (bool success, ) = msg.sender.call{value: amount}("");
     require(success, "Transfer failed");
-
     emit Withdrawal(msg.sender, amount);
 }
