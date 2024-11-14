@@ -69,7 +69,7 @@ receive() external payable {
 }
 ```
 
-### Issue 4: Potential Denial of Service Due to Gas Limit
+### Issue 5: Potential Denial of Service Due to Gas Limit
 **Core reason:** 
 When sending Ether using transfer, Solidity automatically forwards 2300 gas to the recipient's fallback function. However, certain contracts may require more gas, and if the recipient’s fallback function consumes more than 2300 gas, the transfer will fail, even if the contract has enough balance to send.
 
